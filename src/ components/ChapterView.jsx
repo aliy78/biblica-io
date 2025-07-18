@@ -1,19 +1,15 @@
-export default function ChapterSelector({ chapters, chapterIndex, setChapterIndex }) {
+export default function ChapterView({ chapter }) {
   return (
-    <div className="mb-6">
-      <label className="block font-semibold mb-1">📂 Глава:</label>
-      <select
-        value={chapterIndex}
-        onChange={(e) => setChapterIndex(Number(e.target.value))}
-        className="p-2 rounded border w-full"
-      >
-        {chapters.map((chapter, idx) => (
-          <option key={chapter.ChapterId} value={idx}>
-            Глава {chapter.ChapterId}
-          </option>
-        ))}
-      </select>
+    <div className="space-y-3">
+      <h2 className="text-lg font-semibold mb-2">📖 Глава {chapter.ChapterId}</h2>
+      {chapter.Verses.map((v) => (
+        <div
+          key={v.VerseId}
+          className="bg-white dark:bg-gray-800 p-3 rounded shadow"
+        >
+          <strong>{v.VerseId}</strong>. {v.Text}
+        </div>
+      ))}
     </div>
   );
 }
-
