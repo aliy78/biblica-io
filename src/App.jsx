@@ -8,11 +8,25 @@ export default function App() {
   const [selectedBookId, setSelectedBookId] = useState(null);
   const [selectedChapterId, setSelectedChapterId] = useState(null);
   const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  // Загружаем JSON
   useEffect(() => {
-    fetch(process.env.PUBLIC_URL + "/biblie.json.json")
-      .then((res) => res.json())
-      .then((data) => setBibleData(data.Books || data));
+    fetch("./biblie.json")
+      .then((res) => {
+        if (!res.ok) throw new Error("Не удалось загрузить biblie.json");
+        return res.json();
+      })
+      .then((data) => {
+        setBibleData(data.Books || data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Ошибка:", err);
+        setError("Файл biblie.json не найден или повреждён.");
+        setLoading(false);
+      });
   }, []);
 
   const book = bibleData.find((b) => b.BookId === selectedBookId);
@@ -33,29 +47,40 @@ export default function App() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">📘 Biblica.io</h1>
-      <BookSelector
-        books={bibleData}
-        selectedBookId={selectedBookId}
-        setSelectedBookId={setSelectedBookId}
-        setSelectedChapterId={setSelectedChapterId}
-      />
-      {book && (
-        <ChapterSelector
-          book={book}
-          selectedChapterId={selectedChapterId}
-          setSelectedChapterId={setSelectedChapterId}
-        />
-      )}
-      {book && chapter && (
-        <ChapterView
-          book={book}
-          chapter={chapter}
-          toggleFavorite={toggleFavorite}
-          favorites={favorites}
-          handleCopyVerse={handleCopyVerse}
-        />
+    <div className="max-w-3xl mx-auto p-4 text-gray-900">
+      <h1 className="text-3xl font-bold mb-4 text-center">📘 Biblica.io</h1>
+
+      {loading ? (
+        <p>Загрузка данных...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
+      ) : (
+        <>
+          <BookSelector
+            books={bibleData}
+            selectedBookId={selectedBookId}
+            setSelectedBookId={(id) => {
+              setSelectedBookId(id);
+              setSelectedChapterId(null); // Сброс главы при выборе новой книги
+            }}
+          />
+          {book && (
+            <ChapterSelector
+              book={book}
+              selectedChapterId={selectedChapterId}
+              setSelectedChapterId={setSelectedChapterId}
+            />
+          )}
+          {book && chapter && (
+            <ChapterView
+              book={book}
+              chapter={chapter}
+              toggleFavorite={toggleFavorite}
+              favorites={favorites}
+              handleCopyVerse={handleCopyVerse}
+            />
+          )}
+        </>
       )}
     </div>
   );
