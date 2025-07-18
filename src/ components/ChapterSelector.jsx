@@ -1,14 +1,15 @@
-export default function ChapterSelector({ chapters, chapterIndex, setChapterIndex }) {
+export default function ChapterSelector({ book, selectedChapterId, setSelectedChapterId }) {
   return (
-    <div className="mb-6">
-      <label className="block font-semibold mb-1">📂 Глава:</label>
+    <div className="mb-4">
+      <label className="block mb-2 font-semibold">📄 Выберите главу:</label>
       <select
-        value={chapterIndex}
-        onChange={(e) => setChapterIndex(Number(e.target.value))}
-        className="p-2 rounded border w-full"
+        value={selectedChapterId || ""}
+        onChange={(e) => setSelectedChapterId(Number(e.target.value))}
+        className="w-full p-2 border rounded"
       >
-        {chapters.map((chapter, idx) => (
-          <option key={chapter.ChapterId} value={idx}>
+        <option value="">-- Выберите главу --</option>
+        {book.Chapters.map((chapter) => (
+          <option key={chapter.ChapterId} value={chapter.ChapterId}>
             Глава {chapter.ChapterId}
           </option>
         ))}
@@ -16,4 +17,3 @@ export default function ChapterSelector({ chapters, chapterIndex, setChapterInde
     </div>
   );
 }
-
