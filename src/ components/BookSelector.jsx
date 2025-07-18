@@ -1,21 +1,22 @@
-export default function BookSelector({ books, setBookIndex, setChapterIndex }) {
+export default function BookSelector({ books, selectedBookId, setSelectedBookId, setSelectedChapterId }) {
   return (
     <div className="mb-4">
-      <label className="block font-semibold mb-1">📘 Книга:</label>
+      <label className="block mb-2 font-semibold">📚 Выберите книгу:</label>
       <select
+        value={selectedBookId || ""}
         onChange={(e) => {
-          setBookIndex(Number(e.target.value));
-          setChapterIndex(0); // сбрасываем главу при смене книги
+          setSelectedBookId(Number(e.target.value));
+          setSelectedChapterId(null);
         }}
-        className="p-2 rounded border w-full"
+        className="w-full p-2 border rounded"
       >
-        {books.map((book, idx) => (
-          <option key={book.BookId} value={idx}>
-            Книга {book.BookId}
+        <option value="">-- Выберите книгу --</option>
+        {books.map((book) => (
+          <option key={book.BookId} value={book.BookId}>
+            {book.BookTitle}
           </option>
         ))}
       </select>
     </div>
   );
 }
-
