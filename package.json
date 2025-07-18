@@ -1,8 +1,8 @@
 {
-  "name": "biblie",
+  "name": "biblica-io",
   "version": "1.0.0",
   "description": "Biblica React Project",
-  "homepage": "https://aliy78.github.io/biblie",
+  "homepage": "https://aliy78.github.io/biblica-io",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -16,17 +16,5 @@
   },
   "devDependencies": {
     "gh-pages": "^5.0.0"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }
