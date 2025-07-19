@@ -33,4 +33,13 @@ export default function App() {
       <pre>{JSON.stringify(bibleData, null, 2)}</pre>
     </div>
   );
+} <div style={{ padding: 20 }}>
+      <h1>Biblica.io — проверка загрузки</h1>
+
+      {loading && <p>⏳ Загрузка данных...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <pre>{JSON.stringify(bibleData, null, 2)}</pre>
+    </div>
+  );
 }
