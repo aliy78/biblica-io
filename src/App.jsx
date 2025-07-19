@@ -1,3 +1,4 @@
+const [bibleData, setBibleData] = useState([]);
 import { useState, useEffect } from "react";
 
 export default function App() {
